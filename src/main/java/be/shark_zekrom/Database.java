@@ -1,5 +1,6 @@
 package be.shark_zekrom;
 
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 
 import java.sql.*;
@@ -27,6 +28,7 @@ public class Database {
         ResultSet rsMoney = preparedStatementMoney.executeQuery();
 
 
+
         String money = "";
 
         if (rsMoney.next()) {
@@ -37,6 +39,16 @@ public class Database {
 
         return money;
 
+
+    }
+
+    public Database(FileConfiguration config) {
+
+        host = config.getString("host");
+        database = config.getString("database");
+        username = config.getString("username");
+        password = config.getString("password");
+        port = config.getInt("port");
 
     }
 }

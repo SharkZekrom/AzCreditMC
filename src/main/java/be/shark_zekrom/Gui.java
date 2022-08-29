@@ -1,7 +1,5 @@
 package be.shark_zekrom;
 
-import be.shark_zekrom.Commands;
-import be.shark_zekrom.Database;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
