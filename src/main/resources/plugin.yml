@@ -1,0 +1,4 @@
+name: AzCreditMC
+version: '${version}'
+main: be.shark_zekrom.Main
+api-version: 1.13
