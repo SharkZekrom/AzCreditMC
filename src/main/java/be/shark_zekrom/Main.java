@@ -28,7 +28,9 @@ public final class Main extends JavaPlugin {
 
         saveConfig();
 
-        database(config);
+
+        database(config.getString("database.host"), config.getString("database.database"),config.getString("database.username"),config.getString("database.password"),config.getInt("database.port"));
+
         System.out.println("Enabled.");
     }
 
@@ -37,13 +39,12 @@ public final class Main extends JavaPlugin {
 
     }
 
-    public void database(FileConfiguration config) {
-
-        Database.host = config.getString("host");
-        Database.database = config.getString("database");
-        Database.username = config.getString("username");
-        Database.password = config.getString("password");
-        Database.port = config.getInt("port");
+    public void database(String host, String database, String username, String password, int port) {
+        Database.host = host;
+        Database.database = database;
+        Database.username = username;
+        Database.password = password;
+        Database.port = port;
 
     }
 
