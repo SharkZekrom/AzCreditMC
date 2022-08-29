@@ -18,25 +18,22 @@ import java.util.HashMap;
 
 public class Gui implements Listener {
 
+    public static HashMap<Player, String> playerEditing = new HashMap<>();
+    public static HashMap<String, String> moneyPlayer = new HashMap<>();
 
-
-    public static void gui(Player sender ,Player target) throws SQLException {
+    public static void gui(Player sender ,String target) throws SQLException {
 
         String money = Database.getMoney(target);
         if (!money.equals("§c§lJoueur non inscrit")) {
 
-            listPlayer.put(sender, target);
+            playerEditing.put(sender, target);
             moneyPlayer.put(target, money);
 
-            Inventory inventory = Bukkit.createInventory(null, 45, "update point " + target.getName());
+            Inventory inventory = Bukkit.createInventory(null, 45, "update point " + target);
             sender.openInventory(inventory);
             update(sender, inventory);
         }
     }
-
-
-
-
 
 
 
@@ -45,7 +42,7 @@ public class Gui implements Listener {
         ItemStack confirm = new ItemStack(Material.NETHER_STAR);
         ItemMeta confirmMeta = confirm.getItemMeta();
         confirmMeta.setDisplayName("§7Money");
-        confirmMeta.setLore(new ArrayList<>(Collections.singletonList(moneyPlayer.get(listPlayer.get(player)))));
+        confirmMeta.setLore(new ArrayList<>(Collections.singletonList(moneyPlayer.get(playerEditing.get(player)))));
         confirm.setItemMeta(confirmMeta);
         inventory.setItem(4, confirm);
 
@@ -92,34 +89,31 @@ public class Gui implements Listener {
 
 
 
-    public static HashMap<Player, Player> listPlayer = new HashMap<>();
-    public static HashMap<Player, String> moneyPlayer = new HashMap<>();
-
     @EventHandler
-    private void onInventoryClick(InventoryClickEvent event) throws SQLException, IOException {
+    private void onInventoryClick(InventoryClickEvent event) throws SQLException {
         Player player = (Player) event.getWhoClicked();
         int slot = event.getSlot();
-        if (listPlayer.get(player) != null) {
-            if (event.getView().getTitle().equalsIgnoreCase("update point " + listPlayer.get(player).getName())) {
+        if (playerEditing.get(player) != null) {
+            if (event.getView().getTitle().equalsIgnoreCase("update point " + playerEditing.get(player))) {
                 event.setCancelled(true);
 
                 if (slot == 19) {
-                    Commands.addMoney(player, listPlayer.get(player), 100.0);
+                    Commands.addMoney(player, playerEditing.get(player), 100.0);
                 } else if (slot == 20) {
-                    Commands.addMoney(player, listPlayer.get(player), 10.0);
+                    Commands.addMoney(player, playerEditing.get(player), 10.0);
                 } else if (slot == 21) {
-                    Commands.addMoney(player, listPlayer.get(player), 1.0);
+                    Commands.addMoney(player, playerEditing.get(player), 1.0);
                 } else if (slot == 23) {
-                    Commands.removeMoney(player, listPlayer.get(player), 1.0);
+                    Commands.removeMoney(player, playerEditing.get(player), 1.0);
 
                 } else if (slot == 24) {
-                    Commands.removeMoney(player, listPlayer.get(player), 10.0);
+                    Commands.removeMoney(player, playerEditing.get(player), 10.0);
 
                 } else if (slot == 25) {
-                    Commands.removeMoney(player, listPlayer.get(player), 100.0);
+                    Commands.removeMoney(player, playerEditing.get(player), 100.0);
 
                 }
-                gui(player, listPlayer.get(player));
+                gui(player, playerEditing.get(player));
             }
         }
     }

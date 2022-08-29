@@ -19,12 +19,12 @@ public class Database {
         }
     }
 
-    public static String getMoney(Player player) throws SQLException {
+    public static String getMoney(String player) throws SQLException {
 
         Connection connection = Database.getConnection();
 
         PreparedStatement preparedStatementMoney = connection.prepareStatement("select * from users where name = ?");
-        preparedStatementMoney.setString(1, player.getName());
+        preparedStatementMoney.setString(1, player);
         ResultSet rsMoney = preparedStatementMoney.executeQuery();
 
 

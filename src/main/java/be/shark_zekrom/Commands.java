@@ -19,25 +19,22 @@ public class Commands implements CommandExecutor {
         Player player = (Player) sender;
         if (args.length == 3) {
 
-            if (player.hasPermission("negalium.money.add")) {
+            if (player.hasPermission("azmoneymc.add")) {
                 if (args[0].equalsIgnoreCase("add")) {
 
-                    Player target = Bukkit.getPlayer(args[1]);
-
                     try {
-                        addMoney(player, target, Double.valueOf(args[2]));
+                        addMoney(player, args[1], Double.valueOf(args[2]));
 
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
                 }
             }
-            if (player.hasPermission("negalium.money.remove")) {
+            if (player.hasPermission("azmoneymc.remove")) {
                 if (args[0].equalsIgnoreCase("remove")) {
-                    Player target = Bukkit.getPlayer(args[1]);
 
                     try {
-                        removeMoney(player, target, Double.valueOf(args[2]));
+                        removeMoney(player, args[1], Double.valueOf(args[2]));
 
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -49,31 +46,26 @@ public class Commands implements CommandExecutor {
     }
 
 
-    public static void addMoney(Player sender, Player target, Double string) throws SQLException {
-        String money = Database.getMoney(target);
-        if (!money.equals("§c§lJoueur non inscrit")) {
+    public static void addMoney(Player sender, String target, Double money) throws SQLException {
             Connection connection = Database.getConnection();
-            PreparedStatement ps = connection.prepareStatement("UPDATE users SET money = ? WHERE name = ?");
-            ps.setDouble(1, Double.parseDouble(money) + string);
-            ps.setString(2, target.getName());
+            PreparedStatement ps = connection.prepareStatement("UPDATE users SET money = money + ? WHERE name = ?");
+            ps.setDouble(1, money);
+            ps.setString(2, target);
             ps.execute();
 
-            sender.sendMessage("points boutique update to " + (Double.parseDouble(money) + string));
+            sender.sendMessage("points boutique update to " + money);
 
-        }
+
     }
 
-    public static void removeMoney(Player sender, Player target, Double string) throws SQLException {
-        String money = Database.getMoney(target);
-        if (!money.equals("§c§lJoueur non inscrit")) {
-            Connection connection = Database.getConnection();
-            PreparedStatement ps = connection.prepareStatement("UPDATE users SET money = ? WHERE name = ?");
-            ps.setDouble(1, Double.parseDouble(money) - string);
-            ps.setString(2, target.getName());
-            ps.execute();
+    public static void removeMoney(Player sender, String target, Double money) throws SQLException {
+        Connection connection = Database.getConnection();
+        PreparedStatement ps = connection.prepareStatement("UPDATE users SET money = money - ? WHERE name = ?");
+        ps.setDouble(1, money);
+        ps.setString(2, target);
+        ps.execute();
 
-            sender.sendMessage("points boutique update to " + (Double.parseDouble(money) - string));
+        sender.sendMessage("points boutique update to " + money);
 
-        }
     }
 }
