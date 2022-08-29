@@ -2,3 +2,6 @@ name: AzCreditMC
 version: 1.0.0
 main: be.shark_zekrom.Main
 api-version: 1.13
+commands:
+  azmoneymc:
+    description: change money of a user in game
