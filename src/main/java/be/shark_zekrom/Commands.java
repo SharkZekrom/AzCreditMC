@@ -17,6 +17,18 @@ public class Commands implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         Player player = (Player) sender;
+        if (args.length == 2) {
+
+            if (player.hasPermission("azmoneymc.gui")) {
+                if (args[0].equalsIgnoreCase("gui")) {
+                    try {
+                        Gui.gui(player, args[1]);
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }
         if (args.length == 3) {
 
             if (player.hasPermission("azmoneymc.add")) {
