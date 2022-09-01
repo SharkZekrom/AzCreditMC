@@ -19,7 +19,7 @@ public class Commands implements CommandExecutor {
         Player player = (Player) sender;
         if (args.length == 2) {
 
-            if (player.hasPermission("azmoneymc.gui")) {
+            if (player.hasPermission("azcreditmc.gui")) {
                 if (args[0].equalsIgnoreCase("gui")) {
                     try {
                         Gui.gui(player, args[1]);
@@ -31,7 +31,7 @@ public class Commands implements CommandExecutor {
         }
         if (args.length == 3) {
 
-            if (player.hasPermission("azmoneymc.add")) {
+            if (player.hasPermission("azcreditmc.add")) {
                 if (args[0].equalsIgnoreCase("add")) {
 
                     try {
@@ -42,7 +42,7 @@ public class Commands implements CommandExecutor {
                     }
                 }
             }
-            if (player.hasPermission("azmoneymc.remove")) {
+            if (player.hasPermission("azcreditmc.remove")) {
                 if (args[0].equalsIgnoreCase("remove")) {
 
                     try {

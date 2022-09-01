@@ -13,7 +13,7 @@ public final class Main extends JavaPlugin {
 
         pm.registerEvents(new Gui(), this);
 
-        this.getCommand("azmoneymc").setExecutor(new Commands());
+        this.getCommand("azcreditmc").setExecutor(new Commands());
 
 
         FileConfiguration config = getConfig();
