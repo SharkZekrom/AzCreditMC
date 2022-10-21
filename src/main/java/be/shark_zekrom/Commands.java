@@ -5,6 +5,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 
 import java.sql.Connection;
@@ -16,47 +17,68 @@ public class Commands implements CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        Player player = (Player) sender;
-        if (args.length == 2) {
+        if (sender instanceof ConsoleCommandSender) {
+            if (args[0].equalsIgnoreCase("add")) {
 
-            if (player.hasPermission("azcreditmc.gui")) {
-                if (args[0].equalsIgnoreCase("gui")) {
-                    try {
-                        Gui.gui(player, args[1]);
-                    } catch (SQLException e) {
-                        e.printStackTrace();
+                try {
+                    addMoney(null, args[1], Double.valueOf(args[2]));
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+            if (args[0].equalsIgnoreCase("remove")) {
+
+                try {
+                    removeMoney(null, args[1], Double.valueOf(args[2]));
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        } else {
+
+            Player player = (Player) sender;
+            if (args.length == 2) {
+
+                if (player.hasPermission("azcreditmc.gui")) {
+                    if (args[0].equalsIgnoreCase("gui")) {
+                        try {
+                            Gui.gui(player, args[1]);
+                        } catch (SQLException e) {
+                            e.printStackTrace();
+                        }
                     }
                 }
             }
-        }
-        if (args.length == 3) {
+            if (args.length == 3) {
 
-            if (player.hasPermission("azcreditmc.add")) {
-                if (args[0].equalsIgnoreCase("add")) {
+                if (player.hasPermission("azcreditmc.add")) {
+                    if (args[0].equalsIgnoreCase("add")) {
 
-                    try {
-                        addMoney(player, args[1], Double.valueOf(args[2]));
+                        try {
+                            addMoney(player, args[1], Double.valueOf(args[2]));
 
-                    } catch (Exception e) {
-                        e.printStackTrace();
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
                     }
                 }
-            }
-            if (player.hasPermission("azcreditmc.remove")) {
-                if (args[0].equalsIgnoreCase("remove")) {
+                if (player.hasPermission("azcreditmc.remove")) {
+                    if (args[0].equalsIgnoreCase("remove")) {
 
-                    try {
-                        removeMoney(player, args[1], Double.valueOf(args[2]));
+                        try {
+                            removeMoney(player, args[1], Double.valueOf(args[2]));
 
-                    } catch (Exception e) {
-                        e.printStackTrace();
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
                     }
                 }
             }
         }
         return false;
     }
-
 
     public static void addMoney(Player sender, String target, Double money) throws SQLException {
             Connection connection = Database.getConnection();
@@ -65,8 +87,9 @@ public class Commands implements CommandExecutor {
             ps.setString(2, target);
             ps.execute();
 
-            sender.sendMessage("points boutique update to " + money);
-
+            if (sender != null) {
+                sender.sendMessage("points boutique update to " + money);
+            }
 
     }
 
@@ -77,7 +100,8 @@ public class Commands implements CommandExecutor {
         ps.setString(2, target);
         ps.execute();
 
-        sender.sendMessage("points boutique update to " + money);
-
+        if (sender != null) {
+            sender.sendMessage("points boutique update to " + money);
+        }
     }
 }
