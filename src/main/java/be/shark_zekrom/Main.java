@@ -32,11 +32,12 @@ public final class Main extends JavaPlugin {
         config.addDefault("database.port", 3306);
 
         config.addDefault("Reload", "§c[AzCreditMC] Successfully reloaded!");
+        config.addDefault("NoPermission", "§cYou do not have permission to use that");
         config.addDefault("GuiCreditEditing", "update point %player%");
         config.addDefault("ConsoleCreditAdded", "%credits% credits have been added to %player%");
         config.addDefault("ConsoleCreditRemoved", "%credits% credits have been removed from %player%");
         config.addDefault("UnregisteredPlayer", "§cUnregistered player");
-        config.addDefault("NoPermission", "§cYou do not have permission to use that");
+        config.addDefault("UnregisteredPlayerConsole", "§cPlease create a account on https://shark_zekrom.dev");
 
         config.options().copyDefaults(true);
 

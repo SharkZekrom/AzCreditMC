@@ -28,6 +28,10 @@ public class Commands implements CommandExecutor {
                     addCredit(null, args[1], Double.valueOf(args[2]));
                     System.out.println(Main.getInstance().getConfig().getString("ConsoleCreditAdded").replaceAll("%player%", args[1]).replaceAll("%credit%", args[2]));
 
+                    if (Database.getMoney(args[1]) == null) {
+                        Bukkit.getPlayer(args[1]).sendMessage(Main.getInstance().getConfig().getString("Prefix") + Main.getInstance().getConfig().getString("UnregisteredPlayerConsole"));
+                    }
+
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -38,6 +42,9 @@ public class Commands implements CommandExecutor {
                     removeCredit(null, args[1], Double.valueOf(args[2]));
                     System.out.println(Main.getInstance().getConfig().getString("ConsoleCreditRemoved").replaceAll("%player%", args[1]).replaceAll("%credit%", args[2]));
 
+                    if (Database.getMoney(args[1]) == null) {
+                        Bukkit.getPlayer(args[1]).sendMessage(Main.getInstance().getConfig().getString("Prefix") + Main.getInstance().getConfig().getString("UnregisteredPlayerConsole"));
+                    }
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -118,6 +125,7 @@ public class Commands implements CommandExecutor {
         if (sender != null) {
             sender.sendMessage("points boutique update to " + money);
         }
+
 
     }
 
