@@ -2,10 +2,7 @@ package be.shark_zekrom;
 
 import be.shark_zekrom.Database;
 import org.bukkit.Bukkit;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
-import org.bukkit.command.CommandSender;
-import org.bukkit.command.ConsoleCommandSender;
+import org.bukkit.command.*;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.entity.Player;
@@ -15,8 +12,10 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
-public class Commands implements CommandExecutor {
+public class Commands implements CommandExecutor , TabExecutor {
 
 
     @Override
@@ -153,5 +152,18 @@ public class Commands implements CommandExecutor {
 
     }
 
+
+    @Override
+    public List<String> onTabComplete(CommandSender sender, org.bukkit.command.Command command, String label, String[] args) {
+        List<String> arguments = new ArrayList<>();
+        if (args.length == 1) {
+            arguments.add("reload");
+            arguments.add("gui");
+            arguments.add("add");
+            arguments.add("remove");
+
+        }
+        return arguments;
+    }
 
 }
