@@ -22,6 +22,7 @@ public class Commands implements CommandExecutor {
 
                 try {
                     addMoney(null, args[1], Double.valueOf(args[2]));
+                    System.out.println("§a§credit added to " + args[1] + " : " + args[2]);
 
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -31,6 +32,7 @@ public class Commands implements CommandExecutor {
 
                 try {
                     removeMoney(null, args[1], Double.valueOf(args[2]));
+                    System.out.println("§a§credit removed to " + args[1] + " : " + args[2]);
 
                 } catch (Exception e) {
                     e.printStackTrace();
