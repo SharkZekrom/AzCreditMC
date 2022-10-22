@@ -33,7 +33,8 @@ public final class Main extends JavaPlugin {
 
         config.addDefault("Reload", "§c[AzCreditMC] Successfully reloaded!");
         config.addDefault("NoPermission", "§cYou do not have permission to use that");
-        config.addDefault("GuiCreditEditing", "update point %player%");
+        config.addDefault("GuiCreditEditing", "§7Credits");
+        config.addDefault("GuiCredit", "update point %player%");
         config.addDefault("ConsoleCreditAdded", "%credits% credits have been added to %player%");
         config.addDefault("ConsoleCreditRemoved", "%credits% credits have been removed from %player%");
         config.addDefault("UnregisteredPlayer", "§cUnregistered player");
