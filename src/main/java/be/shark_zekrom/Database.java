@@ -26,12 +26,10 @@ public class Database {
 
 
 
-        String money = "";
+        String money = null;
 
         if (rsMoney.next()) {
             money = String.valueOf(rsMoney.getDouble("money"));
-        } else {
-            money = "§c§lJoueur non inscrit";
         }
 
         return money;

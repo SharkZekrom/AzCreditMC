@@ -24,14 +24,16 @@ public class Gui implements Listener {
     public static void gui(Player sender ,String target) throws SQLException {
 
         String money = Database.getMoney(target);
-        if (!money.equals("§c§lJoueur non inscrit")) {
+        if (money != null) {
 
             playerEditing.put(sender, target);
             moneyPlayer.put(target, money);
 
-            Inventory inventory = Bukkit.createInventory(null, 45, "update point " + target);
+            Inventory inventory = Bukkit.createInventory(null, 45, Main.getInstance().getConfig().getString("GuiCreditEditing").replaceAll("%player%", target));
             sender.openInventory(inventory);
             update(sender, inventory);
+        } else {
+            sender.sendMessage(Main.getInstance().getConfig().getString("UnregisteredPlayer"));
         }
     }
 
@@ -41,7 +43,7 @@ public class Gui implements Listener {
 
         ItemStack confirm = new ItemStack(Material.NETHER_STAR);
         ItemMeta confirmMeta = confirm.getItemMeta();
-        confirmMeta.setDisplayName("§7Money");
+        confirmMeta.setDisplayName("§7Credits");
         confirmMeta.setLore(new ArrayList<>(Collections.singletonList(moneyPlayer.get(playerEditing.get(player)))));
         confirm.setItemMeta(confirmMeta);
         inventory.setItem(4, confirm);
@@ -94,23 +96,23 @@ public class Gui implements Listener {
         Player player = (Player) event.getWhoClicked();
         int slot = event.getSlot();
         if (playerEditing.get(player) != null) {
-            if (event.getView().getTitle().equalsIgnoreCase("update point " + playerEditing.get(player))) {
+            if (event.getView().getTitle().equalsIgnoreCase(Main.getInstance().getConfig().getString("GuiCreditEditing").replaceAll("%player%", playerEditing.get(player)))) {
                 event.setCancelled(true);
 
                 if (slot == 19) {
-                    Commands.addMoney(player, playerEditing.get(player), 100.0);
+                    Commands.addCredit(player, playerEditing.get(player), 100.0);
                 } else if (slot == 20) {
-                    Commands.addMoney(player, playerEditing.get(player), 10.0);
+                    Commands.addCredit(player, playerEditing.get(player), 10.0);
                 } else if (slot == 21) {
-                    Commands.addMoney(player, playerEditing.get(player), 1.0);
+                    Commands.addCredit(player, playerEditing.get(player), 1.0);
                 } else if (slot == 23) {
-                    Commands.removeMoney(player, playerEditing.get(player), 1.0);
+                    Commands.removeCredit(player, playerEditing.get(player), 1.0);
 
                 } else if (slot == 24) {
-                    Commands.removeMoney(player, playerEditing.get(player), 10.0);
+                    Commands.removeCredit(player, playerEditing.get(player), 10.0);
 
                 } else if (slot == 25) {
-                    Commands.removeMoney(player, playerEditing.get(player), 100.0);
+                    Commands.removeCredit(player, playerEditing.get(player), 100.0);
 
                 }
                 gui(player, playerEditing.get(player));

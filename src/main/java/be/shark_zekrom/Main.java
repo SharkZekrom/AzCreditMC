@@ -7,8 +7,16 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public final class Main extends JavaPlugin {
 
+    private static Main instance;
+
+    public static Main getInstance() {
+        return instance;
+    }
+
+
     @Override
     public void onEnable() {
+        instance = this;
         PluginManager pm = getServer().getPluginManager();
 
         pm.registerEvents(new Gui(), this);
@@ -23,13 +31,23 @@ public final class Main extends JavaPlugin {
         config.addDefault("database.password", " ");
         config.addDefault("database.port", 3306);
 
+        config.addDefault("Reload", "§c[AzCreditMC] Successfully reloaded!");
+        config.addDefault("GuiCreditEditing", "update point %player%");
+        config.addDefault("ConsoleCreditAdded", "%credits% credits have been added to %player%");
+        config.addDefault("ConsoleCreditRemoved", "%credits% credits have been removed from %player%");
+        config.addDefault("UnregisteredPlayer", "§cUnregistered player");
+        config.addDefault("NoPermission", "§cYou do not have permission to use that");
 
         config.options().copyDefaults(true);
 
         saveConfig();
 
 
-        database(config.getString("database.host"), config.getString("database.database"),config.getString("database.username"),config.getString("database.password"),config.getInt("database.port"));
+        database(config.getString("database.host"),
+                config.getString("database.database"),
+                config.getString("database.username"),
+                config.getString("database.password"),
+                config.getInt("database.port"));
 
         System.out.println("Enabled.");
     }
