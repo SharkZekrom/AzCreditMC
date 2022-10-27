@@ -1,5 +1,7 @@
 package be.shark_zekrom;
 
+import org.bukkit.entity.Player;
+
 import java.sql.*;
 
 public class Database {
@@ -36,4 +38,46 @@ public class Database {
 
 
     }
+
+
+    public static void addCredit(Player sender, String target, Double money) throws SQLException {
+        Connection connection = Database.getConnection();
+        PreparedStatement ps = connection.prepareStatement("UPDATE users SET money = money + ? WHERE name = ?");
+        ps.setDouble(1, money);
+        ps.setString(2, target);
+        ps.execute();
+
+        if (sender != null) {
+            sender.sendMessage("points boutique update to " + money);
+        }
+
+
+    }
+
+    public static void removeCredit(Player sender, String target, Double money) throws SQLException {
+
+        Connection connection = Database.getConnection();
+        PreparedStatement ps = connection.prepareStatement("UPDATE users SET money = money - ? WHERE name = ?");
+        ps.setDouble(1, money);
+        ps.setString(2, target);
+        ps.execute();
+
+        if (sender != null) {
+            sender.sendMessage("points boutique update to " + money);
+        }
+    }
+
+    public static void setCredit(Player sender, String target, Double money) throws SQLException {
+
+        Connection connection = Database.getConnection();
+        PreparedStatement ps = connection.prepareStatement("UPDATE users SET money = ? WHERE name = ?");
+        ps.setDouble(1, money);
+        ps.setString(2, target);
+        ps.execute();
+
+        if (sender != null) {
+            sender.sendMessage("points boutique update to " + money);
+        }
+    }
+
 }

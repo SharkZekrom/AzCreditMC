@@ -1,5 +1,6 @@
 package be.shark_zekrom;
 
+import org.apache.commons.lang.math.NumberUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -106,24 +107,31 @@ public class Gui implements Listener {
             if (event.getView().getTitle().equalsIgnoreCase(Main.getInstance().getConfig().getString("GuiCreditEditing").replaceAll("%player%", playerEditing.get(player)))) {
                 event.setCancelled(true);
 
-                if (slot == 10) {
-                    Commands.addCredit(player, playerEditing.get(player), 100.0);
-                } else if (slot == 11) {
-                    Commands.addCredit(player, playerEditing.get(player), 10.0);
-                } else if (slot == 12) {
-                    Commands.addCredit(player, playerEditing.get(player), 1.0);
-                } else if (slot == 14) {
-                    Commands.removeCredit(player, playerEditing.get(player), 1.0);
-                } else if (slot == 15) {
-                    Commands.removeCredit(player, playerEditing.get(player), 10.0);
-
-                } else if (slot == 16) {
-                    Commands.removeCredit(player, playerEditing.get(player), 100.0);
-
-                } else if (slot == 13) {
+                if (slot == 13) {
                     customAmount(player);
+                } else {
+                    switch (slot) {
+                        case 10:
+                            Database.addCredit(player ,playerEditing.get(player), 100.0);
+                            break;
+                        case 11:
+                            Database.addCredit(player ,playerEditing.get(player), 10.0);
+                            break;
+                        case 12:
+                            Database.addCredit(player ,playerEditing.get(player), 1.0);
+                            break;
+                        case 14:
+                            Database.removeCredit(player ,playerEditing.get(player), 1.0);
+                            break;
+                        case 15:
+                            Database.removeCredit(player ,playerEditing.get(player), 10.0);
+                            break;
+                        case 16:
+                            Database.removeCredit(player ,playerEditing.get(player), 100.0);
+                            break;
+                    }
+                    gui(player, playerEditing.get(player));
                 }
-                gui(player, playerEditing.get(player));
             }
         }
     }
@@ -150,7 +158,7 @@ public class Gui implements Listener {
 
         if (playerEditingCustomMoney.contains(player)) {
             playerEditingCustomMoney.remove(player);
-            Commands.setCredit(player, playerEditing.get(player), Double.valueOf(event.getMessage()));
+            Database.setCredit(player, playerEditing.get(player), Double.valueOf(event.getMessage()));
         }
 
     }

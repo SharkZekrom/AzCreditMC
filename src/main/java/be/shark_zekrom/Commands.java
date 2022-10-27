@@ -24,7 +24,7 @@ public class Commands implements CommandExecutor , TabExecutor {
             if (args[0].equalsIgnoreCase("add")) {
 
                 try {
-                    addCredit(null, args[1], Double.valueOf(args[2]));
+                    Database.addCredit(null, args[1], Double.valueOf(args[2]));
                     System.out.println(Main.getInstance().getConfig().getString("ConsoleCreditAdded").replaceAll("%player%", args[1]).replaceAll("%credits%", args[2]));
 
                     if (Database.getMoney(args[1]) == null) {
@@ -38,7 +38,7 @@ public class Commands implements CommandExecutor , TabExecutor {
             if (args[0].equalsIgnoreCase("remove")) {
 
                 try {
-                    removeCredit(null, args[1], Double.valueOf(args[2]));
+                    Database.removeCredit(null, args[1], Double.valueOf(args[2]));
                     System.out.println(Main.getInstance().getConfig().getString("ConsoleCreditRemoved").replaceAll("%player%", args[1]).replaceAll("%credits%", args[2]));
 
                     if (Database.getMoney(args[1]) == null) {
@@ -85,7 +85,7 @@ public class Commands implements CommandExecutor , TabExecutor {
                     if (args[0].equalsIgnoreCase("add")) {
 
                         try {
-                            addCredit(player, args[1], Double.valueOf(args[2]));
+                            Database.addCredit(player, args[1], Double.valueOf(args[2]));
 
                         } catch (Exception e) {
                             e.printStackTrace();
@@ -99,7 +99,7 @@ public class Commands implements CommandExecutor , TabExecutor {
                     if (args[0].equalsIgnoreCase("remove")) {
 
                         try {
-                            removeCredit(player, args[1], Double.valueOf(args[2]));
+                            Database.removeCredit(player, args[1], Double.valueOf(args[2]));
 
                         } catch (Exception e) {
                             e.printStackTrace();
@@ -112,46 +112,6 @@ public class Commands implements CommandExecutor , TabExecutor {
             }
         }
         return false;
-    }
-
-    public static void addCredit(Player sender, String target, Double money) throws SQLException {
-        Connection connection = Database.getConnection();
-        PreparedStatement ps = connection.prepareStatement("UPDATE users SET money = money + ? WHERE name = ?");
-        ps.setDouble(1, money);
-        ps.setString(2, target);
-        ps.execute();
-
-        if (sender != null) {
-            sender.sendMessage("points boutique update to " + money);
-        }
-
-
-    }
-
-    public static void removeCredit(Player sender, String target, Double money) throws SQLException {
-
-        Connection connection = Database.getConnection();
-        PreparedStatement ps = connection.prepareStatement("UPDATE users SET money = money - ? WHERE name = ?");
-        ps.setDouble(1, money);
-        ps.setString(2, target);
-        ps.execute();
-
-        if (sender != null) {
-            sender.sendMessage("points boutique update to " + money);
-        }
-    }
-
-    public static void setCredit(Player sender, String target, Double money) throws SQLException {
-
-        Connection connection = Database.getConnection();
-        PreparedStatement ps = connection.prepareStatement("UPDATE users SET money = ? WHERE name = ?");
-        ps.setDouble(1, money);
-        ps.setString(2, target);
-        ps.execute();
-
-        if (sender != null) {
-            sender.sendMessage("points boutique update to " + money);
-        }
     }
 
 
