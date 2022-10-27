@@ -48,7 +48,7 @@ public class Database {
         ps.execute();
 
         if (sender != null) {
-            sender.sendMessage("points boutique update to " + money);
+            sender.sendMessage(Main.getInstance().getConfig().getString("CreditUpdatedTo").replaceAll("%credits%", String.valueOf((Double.parseDouble(getMoney(target))))));
         }
 
 
@@ -63,7 +63,7 @@ public class Database {
         ps.execute();
 
         if (sender != null) {
-            sender.sendMessage("points boutique update to " + money);
+            sender.sendMessage(Main.getInstance().getConfig().getString("CreditUpdatedTo").replaceAll("%credits%", String.valueOf((Double.parseDouble(getMoney(target))))));
         }
     }
 
@@ -76,7 +76,7 @@ public class Database {
         ps.execute();
 
         if (sender != null) {
-            sender.sendMessage("points boutique update to " + money);
+            sender.sendMessage(Main.getInstance().getConfig().getString("CreditUpdatedTo").replaceAll("%credits%", String.valueOf((Double.parseDouble(getMoney(target))))));
         }
     }
 

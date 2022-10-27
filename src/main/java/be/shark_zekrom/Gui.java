@@ -157,6 +157,7 @@ public class Gui implements Listener {
         Player player = event.getPlayer();
 
         if (playerEditingCustomMoney.contains(player)) {
+            event.setCancelled(true);
             playerEditingCustomMoney.remove(player);
             Database.setCredit(player, playerEditing.get(player), Double.valueOf(event.getMessage()));
         }

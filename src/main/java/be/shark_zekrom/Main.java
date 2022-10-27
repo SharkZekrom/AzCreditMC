@@ -44,6 +44,7 @@ public final class Main extends JavaPlugin {
         config.addDefault("EnterCustomAmount", "§cEnter custom amount");
         config.addDefault("TooLong", "§cYou took too long to enter the amount");
         config.addDefault("CustomAmount", "Custom amount");
+        config.addDefault("CreditUpdatedTo", "§eCredits updated to %credits%");
 
         config.options().copyDefaults(true);
 
