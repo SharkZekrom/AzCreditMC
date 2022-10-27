@@ -48,6 +48,12 @@ public class Gui implements Listener {
         confirm.setItemMeta(confirmMeta);
         inventory.setItem(4, confirm);
 
+        ItemStack custom = new ItemStack(Material.SIGN);
+        ItemMeta customMeta = custom.getItemMeta();
+        customMeta.setDisplayName("Custom amount");
+        custom.setItemMeta(customMeta);
+        inventory.setItem(13, custom);
+
         ItemStack plus100 = new ItemStack(Material.LIME_STAINED_GLASS_PANE);
         ItemMeta plus100Meta = plus100.getItemMeta();
         plus100Meta.setDisplayName("§a+ 100");

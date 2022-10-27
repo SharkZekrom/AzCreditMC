@@ -5,6 +5,8 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.util.logging.Level;
+
 public final class Main extends JavaPlugin {
 
     private static Main instance;
@@ -51,7 +53,7 @@ public final class Main extends JavaPlugin {
                 config.getString("database.password"),
                 config.getInt("database.port"));
 
-        System.out.println("Enabled.");
+        JavaPlugin.getPlugin(Main.class).getLogger().log(Level.INFO, "Enabled.");
     }
 
     @Override

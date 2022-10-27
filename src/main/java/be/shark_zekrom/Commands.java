@@ -129,6 +129,7 @@ public class Commands implements CommandExecutor , TabExecutor {
     }
 
     public static void removeCredit(Player sender, String target, Double money) throws SQLException {
+
         Connection connection = Database.getConnection();
         PreparedStatement ps = connection.prepareStatement("UPDATE users SET money = money - ? WHERE name = ?");
         ps.setDouble(1, money);
