@@ -41,6 +41,9 @@ public final class Main extends JavaPlugin {
         config.addDefault("ConsoleCreditRemoved", "%credits% credits have been removed from %player%");
         config.addDefault("UnregisteredPlayer", "§cUnregistered player");
         config.addDefault("UnregisteredPlayerConsole", "§cPlease create a account on https://shark_zekrom.dev");
+        config.addDefault("EnterCustomAmount", "§cEnter custom amount");
+        config.addDefault("TooLong", "§cYou took too long to enter the amount");
+        config.addDefault("CustomAmount", "Custom amount");
 
         config.options().copyDefaults(true);
 

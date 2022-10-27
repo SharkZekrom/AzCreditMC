@@ -6,9 +6,11 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -20,6 +22,7 @@ public class Gui implements Listener {
 
     public static HashMap<Player, String> playerEditing = new HashMap<>();
     public static HashMap<String, String> moneyPlayer = new HashMap<>();
+    public static ArrayList<Player> playerEditingCustomMoney = new ArrayList<>();
 
     public static void gui(Player sender ,String target) throws SQLException {
 
@@ -50,7 +53,7 @@ public class Gui implements Listener {
 
         ItemStack custom = new ItemStack(Material.SIGN);
         ItemMeta customMeta = custom.getItemMeta();
-        customMeta.setDisplayName("Custom amount");
+        customMeta.setDisplayName(Main.getInstance().getConfig().getString("CustomAmount"));
         custom.setItemMeta(customMeta);
         inventory.setItem(13, custom);
 
@@ -117,9 +120,38 @@ public class Gui implements Listener {
                 } else if (slot == 16) {
                     Commands.removeCredit(player, playerEditing.get(player), 100.0);
 
+                } else if (slot == 13) {
+                    customAmount(player);
                 }
                 gui(player, playerEditing.get(player));
             }
         }
+    }
+
+    public void customAmount(Player player)  {
+        player.sendMessage(Main.getInstance().getConfig().getString("EnterCustomAmount"));
+        player.closeInventory();
+        playerEditingCustomMoney.add(player);
+
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                if (playerEditingCustomMoney.contains(player)) {
+                    playerEditingCustomMoney.remove(player);
+                    player.sendMessage(Main.getInstance().getConfig().getString("TooLong"));
+                }
+            }
+        }.runTaskLater(Main.getInstance(), 100L);
+    }
+
+    @EventHandler
+    private void onChat(AsyncPlayerChatEvent event) throws SQLException {
+        Player player = event.getPlayer();
+
+        if (playerEditingCustomMoney.contains(player)) {
+            playerEditingCustomMoney.remove(player);
+            Commands.setCredit(player, playerEditing.get(player), Double.valueOf(event.getMessage()));
+        }
+
     }
 }
